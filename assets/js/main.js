@@ -8,9 +8,19 @@ let iniciar = document.querySelector("#iniciar");
 let pausar = document.querySelector("#pausar");
 let zerar = document.querySelector("#zerar");
 
+
+
+function horaAtual(segundos)
+{   
+    let data = new Date(segundos * 1000);
+    return data.toLocaleTimeString("pt-BR",{
+        hour12: false,
+        timeZone:"UTC"
+    });
+};
 //Pegando a hora atual
 function horaAtual(segundos)
-{
+{   
     let data = new Date(segundos * 1000);
     return data.toLocaleTimeString("pt-BR",{
         hour12: false,
@@ -22,12 +32,17 @@ let timer;
 let segundos = 0;
 
 
-// Controlhe inicia o temporizados
 
 iniciar.addEventListener("click", function(){
+
+    let dispertador = document.querySelector("#horario");
+    let displayDis = document.querySelector("#displaydispertador");
      timer = setInterval(function(){
         inicio.innerHTML = horaAtual(segundos++);
-        inicio.classList.remove("pausado");
+        if(inicio.innerHTML == dispertador.value){
+            displayDis.append('você programou para: '+ dispertador.value +'</strong>');
+            clearInterval(timer);
+        }
         return        
     },1000);
 
@@ -46,6 +61,5 @@ zerar.addEventListener("click", function(){
     inicio.classList.remove("pausado");
     segundos = 0;
 });
-
 }
 relogio();
